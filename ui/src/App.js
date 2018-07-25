@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import './App.css';
-import AddForm from './components/AddForm';
+
 import Recipes from './components/Recipes';
 import { recipeAPI } from './api/';
+import { Link } from 'react-router-dom';
 
 class App extends Component {
     constructor(props) {
@@ -65,24 +66,6 @@ class App extends Component {
 
     }
 
-    // handleAddButton(id) {
-    //
-    //     console.log('add open');
-    //     this.setState({
-    //         showAddForm: true
-    //     });
-    // }
-    //
-    // handleAddSave(recipe) {
-    //     this.setState((prevState, props) => {
-    //         const newRecipe = {...recipe, id: this.state.nextRecipeId};
-    //         return {
-    //             nextRecipeId: prevState.nextRecipeId + 1,
-    //             recipes: [...this.state.recipes, newRecipe],
-    //             showAddForm: false
-    //         };
-    //     });
-    // }
 
 
     render() {
@@ -91,17 +74,13 @@ class App extends Component {
                 <header className="App-header">
                     <h1 className="App-title">CookBook</h1>
 
-                    <button className="buttons" onClick={this.handleAddButton}>
-                        Add Recipe
+                    <button className="buttons">
+                        <Link to="/recipes/new">Add Recipe</Link>
+
                     </button>
                 </header>
 
-                {/*{this.state.showAddForm ? (*/}
-                    {/*<AddForm*/}
-                        {/*onSave={this.handleAddSave}*/}
-                        {/*onClose={() => this.setState({showAddForm: false})}*/}
-                    {/*/>*/}
-                {/*) : null}*/}
+
                 <Recipes recipes={this.state.recipes}
                          onDelete={this.handleDelete}
                 />

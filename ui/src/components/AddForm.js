@@ -1,97 +1,118 @@
-import React, { Component } from "react";
+import React from "react";
 import "./../App.css";
+import {Link} from 'react-router-dom';
+import PropTypes from 'prop-types';
+import {recipeAPI} from '../api/';
 
-class AddForm extends Component {
+
+
+export default class AddForm extends React.Component {
     constructor(props) {
         super(props);
+
         this.state = {
-            name: "",
-            description: "",
-
-        };
-        this.handleChange = this.handleChange.bind(this);
-        this.handleChangeDescr = this.handleSubmit.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
-
-    handleChange(e) {
-        console.log(e.target.name);
-        this.setState({
-            [e.target.name]: e.target.value
-
-        });
-    }
-    handleChangeDescr(e) {
-        console.log(e.target.name);
-        this.setState({
-            [e.target.name]: e.target.value
-
-        });
+            title: props.initialValues.title,
+            description: props.initialValues.description
+        }
     }
 
 
 
-    handleSubmit(e) {
+    handleFieldChange = ({target}) => {
+        this.setState(state => ({
+                ...state,
+                [target.name]: target.value
+            })
+        );
+    };
+
+    handleSubmit = (e) => {
         e.preventDefault();
 
-        this.props.onSave({ ...this.state });
-        this.setState({
-            name: "",
-            description: "",
+        const recipe = this.state;
+        recipeAPI.addRecipe(recipe).then((res) => {
 
-        });
+            }
+        );
+        console.log(recipe);
+
+        this.setState({
+            title: '',
+            description: ''
+        })
+
+
+    };
+
+    isSubmitAllowed() {
+        return this.state.title && this.state.description;
     }
 
     render() {
-
+        const {disabled} = this.props;
+        const {title, description} = this.state;
         return (
             <div className="recipe-form-container">
-                <form className="recipe-form" onSubmit={this.handleSubmit}>
+                <form className="recipe-form">
                     <button
                         type="button"
-                        onClick={this.props.onClose}
+
                         className="close-button"
                     >
-                        Close
+                        <Link to="/">Close</Link>
                     </button>
                     <div className="recipe-form-line">
                         <label htmlFor="recipe-title-input">Title: </label>
                         <input
-                            id="recipe-title-input"
-                            key="name"
-                            name="name1"
-                            type="text"
-                            value={this.state.name}
-                            size={42}
+
+                            name="title"
+                            value={title}
                             autoComplete="off"
-                            onChange={this.handleChange}
+                            placeholder="Some fancy title"
+                            onChange={this.handleFieldChange}
+                            disabled={disabled}
                         />
                         <label htmlFor="recipe-title-input">Description: </label>
-                        <input
-                            id="recipe-description-input"
-                            // key="descr"
+                        <textarea
+
+
                             name="description"
-                            type="text"
-                            value={this.state.description}
-                            size={42}
-                            autoComplete="off"
-                            onChange={this.handleChangeDescr}
+                            value={description}
+                            placeholder="description here"
+                            onChange={this.handleFieldChange}
+                            disabled={disabled}
                         />
                     </div>
 
 
-                    <div className="recipe-form-line" />
+                    <div className="recipe-form-line"/>
                     <button
+                        onClick={this.handleSubmit}
+                        disabled={!this.isSubmitAllowed()}
+                        content="SAVE"
                         type="submit"
                         className="buttons"
-                        style={{ alignSelf: "flex-end", marginRight: 0 }}
-                    >
-                        SAVE
+                        style={{alignSelf: "flex-end", marginRight: 0, cursor: 'pointer'}}
+                    >SAVE
                     </button>
+
+
                 </form>
             </div>
         );
     }
 }
 
-export default AddForm;
+AddForm.defaultProps = {
+    initialValues: {
+        title: '',
+        description: ''
+    }
+};
+AddForm.propTypes = {
+    disabled: PropTypes.bool,
+    initialValues: PropTypes.shape({
+        title: PropTypes.string,
+        description: PropTypes.string
+    })
+};
