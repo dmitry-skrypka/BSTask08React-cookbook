@@ -3,7 +3,7 @@ import {BrowserRouter, Switch, Route, Redirect} from 'react-router-dom';
 import App from "../App";
 import Recipe from './Recipe';
 import AddForm from './AddForm';
-
+import EditForm from './EditForm';
 
 const Router = () => (
     <BrowserRouter>
@@ -12,7 +12,9 @@ const Router = () => (
 
             <Route path="/" exact render={() => <Redirect to="recipes" />} />
             <Route path="/recipes/new" component={AddForm} />
+            <Route path="/recipes/edit/:id" exact component={EditForm} />
             <Route path="/recipes/:id" component={Recipe} />
+
             <Route path="/recipes" component={App} exact />
 
         </Switch>

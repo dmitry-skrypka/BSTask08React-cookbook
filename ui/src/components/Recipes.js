@@ -32,7 +32,12 @@ const Recipes = props => (
                             </button>
 
                             <button
-                                className="buttons" onClick={() => props.onEdit(recipe._id)}>Edit
+                                className="buttons" >
+
+                                <Link to={{
+                                    pathname: `/recipes/edit/${recipe._id}`,
+                                    state: {recipe}
+                                }}> Edit </Link>
                             </button>
                             <button
                                 className="buttons" onClick={() => props.onDelete(recipe._id)}>Delete
