@@ -26,8 +26,8 @@ const Recipes = props => (
 
                             <button className="buttons">
                                 <Link to={{
-                                    pathname: `/${recipe._id}`,
-                                    state: {recipe: recipe}
+                                    pathname: `/recipes/${recipe._id}`,
+                                    state: {recipe}
                                 }}> view recipe </Link>
                             </button>
 

@@ -9,8 +9,8 @@ class App extends Component {
         super(props);
 
 
-        this.handleAddSave = this.handleAddSave.bind(this);
-        this.handleAddButton = this.handleAddButton.bind(this);
+        // this.handleAddSave = this.handleAddSave.bind(this);
+        // this.handleAddButton = this.handleAddButton.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
 
 
@@ -65,24 +65,24 @@ class App extends Component {
 
     }
 
-    handleAddButton(id) {
-
-        console.log('add open');
-        this.setState({
-            showAddForm: true
-        });
-    }
-
-    handleAddSave(recipe) {
-        this.setState((prevState, props) => {
-            const newRecipe = {...recipe, id: this.state.nextRecipeId};
-            return {
-                nextRecipeId: prevState.nextRecipeId + 1,
-                recipes: [...this.state.recipes, newRecipe],
-                showAddForm: false
-            };
-        });
-    }
+    // handleAddButton(id) {
+    //
+    //     console.log('add open');
+    //     this.setState({
+    //         showAddForm: true
+    //     });
+    // }
+    //
+    // handleAddSave(recipe) {
+    //     this.setState((prevState, props) => {
+    //         const newRecipe = {...recipe, id: this.state.nextRecipeId};
+    //         return {
+    //             nextRecipeId: prevState.nextRecipeId + 1,
+    //             recipes: [...this.state.recipes, newRecipe],
+    //             showAddForm: false
+    //         };
+    //     });
+    // }
 
 
     render() {
@@ -96,12 +96,12 @@ class App extends Component {
                     </button>
                 </header>
 
-                {this.state.showAddForm ? (
-                    <AddForm
-                        onSave={this.handleAddSave}
-                        onClose={() => this.setState({showAddForm: false})}
-                    />
-                ) : null}
+                {/*{this.state.showAddForm ? (*/}
+                    {/*<AddForm*/}
+                        {/*onSave={this.handleAddSave}*/}
+                        {/*onClose={() => this.setState({showAddForm: false})}*/}
+                    {/*/>*/}
+                {/*) : null}*/}
                 <Recipes recipes={this.state.recipes}
                          onDelete={this.handleDelete}
                 />
