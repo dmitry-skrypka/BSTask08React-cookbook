@@ -2,8 +2,7 @@ import React, {Component} from 'react';
 import './App.css';
 import AddForm from './components/AddForm';
 import Recipes from './components/Recipes';
-import axios from 'axios';
-
+import { recipeAPI } from './api/';
 
 class App extends Component {
     constructor(props) {
@@ -14,6 +13,8 @@ class App extends Component {
         this.handleAddButton = this.handleAddButton.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
 
+
+
     }
 
     state = {
@@ -22,24 +23,46 @@ class App extends Component {
         showEditForm: false,
     };
 
+
+
+
+
     componentDidMount() {
-        axios.get(`http://localhost:9000/api/recipes/`)
-            .then((res) => {
+        // axios.get(`http://localhost:9000/api/recipes/`)
+        //     .then((res) => {
+        //         const data = res.data;
+        //         this.setState({recipes: data});
+        //         console.log(data)
+        //
+        //     });
+
+
+        recipeAPI.fetchAllRecipes().then((res) => {
+                    const data = res.data;
+                    this.setState({recipes: data});
+                    console.log(data)
+
+                })
+    }
+
+    handleDelete(id) {
+        recipeAPI.deleteRecipe(id).then((res) => {
+            console.log(res);
+
+            recipeAPI.fetchAllRecipes().then((res) => {
                 const data = res.data;
                 this.setState({recipes: data});
                 console.log(data)
 
-            });
-    }
+            })
+        })
 
-    handleDelete(id) {
-        console.log(id);
-        axios.delete(`http://localhost:9000/api/recipes/${id}`)
-            .then((res) => {
 
-                console.log(res)
 
-            });
+
+
+
+
     }
 
     handleAddButton(id) {
@@ -61,11 +84,12 @@ class App extends Component {
         });
     }
 
+
     render() {
         return (
             <div className="App">
                 <header className="App-header">
-                    <h1 className="App-title">Recipe Search</h1>
+                    <h1 className="App-title">CookBook</h1>
 
                     <button className="buttons" onClick={this.handleAddButton}>
                         Add Recipe
